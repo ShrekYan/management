@@ -1,9 +1,16 @@
 import {defineConfig} from "umi";
 
+//"@umijs/plugins/dist/keepalive"
 export default defineConfig({
-    //关闭mock服务
-    mock: false,
     plugins: ["@umijs/plugins/dist/antd", "@umijs/plugins/dist/dva"],
+    base:"/",
+    history:{
+        type :"hash"
+    },
+    autoprefixer:{ flexbox: 'no-2009' },
+    cacheDirectoryPath:"node_modules/.cache",
+    mock: false,
+    copy:[],
     antd: {
         import: false,
         style: "less",
@@ -13,6 +20,12 @@ export default defineConfig({
     //打包成es5
     jsMinifier: "terser",
     cssMinifier: "cssnano",
+    cssPublicPath:"./",
+    define:{
+
+    },
+    favicons:[],
+    inlineLimit:10000,
     routes: [
         {path: "/", component: "index"},
         {path: "/docs", component: "docs"},
