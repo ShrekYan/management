@@ -310,6 +310,28 @@ interface IConfigTypes {
     run: {
     globals?: (Array<string> | undefined);
 };
+    antd: {
+    dark?: (boolean | undefined);
+    compact?: (boolean | undefined);
+    import?: (boolean | undefined);
+    style?: ("less" | "css" | undefined);
+    theme?: ({
+    components: { [x: string]: { [x: string]: any } };
+} | { [x: string]: any } | undefined);
+    appConfig?: ({ [x: string]: any } | undefined);
+    momentPicker?: (boolean | undefined);
+    styleProvider?: ({ [x: string]: any } | undefined);
+    configProvider?: ({
+    theme: {
+    components: { [x: string]: { [x: string]: any } };
+} | { [x: string]: any };
+} | { [x: string]: any } | undefined);
+};
+    dva: {
+    extraModels?: (Array<string> | undefined);
+    immer?: ({ [x: string]: any } | undefined);
+    skipModelValidate?: (boolean | undefined);
+};
 };
 
 type PrettifyWithCloseable<T> = {

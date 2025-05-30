@@ -3,17 +3,38 @@
   "author": "yanjinqiang <yanjinqiang@zofund.com>",
   "scripts": {
     "dev": "umi dev",
+    "start:localtest": "cross-env UMI_ENV=localtest umi dev",
     "build": "umi build",
     "postinstall": "umi setup",
     "setup": "umi setup",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "lint": "umi lint",
+    "prepare": "husky"
   },
   "dependencies": {
+    "antd": "^5.25.3",
     "umi": "^4.4.11"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
+    "@umijs/lint": "^4.4.11",
+    "@umijs/plugins": "^4.4.11",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.27.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.0",
+    "postcss-less": "^6.0.0",
+    "stylelint": "^14.16.1",
+    "stylelint-config-standard-less": "^3.0.1",
+    "stylelint-less": "^3.0.1",
     "typescript": "^5.0.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,css,less,scss}": [
+      "umi lint"
+    ]
   }
 }

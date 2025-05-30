@@ -3,14 +3,16 @@
 // DO NOT CHANGE IT MANUALLY!
 import React, { useEffect, useState } from 'react';
 import { ApplyPluginsType } from 'umi';
-import { renderClient, RenderClientOpts } from '/Users/yanjinqiang/WebstormProjects/management/node_modules/.pnpm/@umijs+renderer-react@4.4.11_nnrd3gsncyragczmpvfhocinkq/node_modules/@umijs/renderer-react';
+import { renderClient, RenderClientOpts } from '/Users/yanjinqiang/WebstormProjects/management/node_modules/@umijs/preset-umi/node_modules/@umijs/renderer-react';
 import { createHistory } from './core/history';
 import { createPluginManager } from './core/plugin';
 import { getRoutes } from './core/route';
 import type { Location } from 'history';
 
+import Loading from '/Users/yanjinqiang/WebstormProjects/management/src/loading.tsx';
 
-
+import '/Users/yanjinqiang/WebstormProjects/management/src/global.less';
+import 'antd/dist/reset.css';
 const publicPath = '/';
 const runtimePublicPath = false;
 
@@ -51,6 +53,7 @@ export function TestBrowser(props: TestBrowserProps) {
         routeComponents,
         pluginManager,
         rootElement: contextOpts.rootElement || document.getElementById('root'),
+        loadingComponent: Loading,
         publicPath,
         runtimePublicPath,
         history,
