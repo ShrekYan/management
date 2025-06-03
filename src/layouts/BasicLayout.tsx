@@ -1,8 +1,8 @@
-import React, {useEffect, useMemo, useState} from "react"
+import React, {useEffect, useState} from "react"
 import type {MenuProps} from "antd"
 import {Avatar, Button, Dropdown, Layout, Menu, Tabs} from "antd"
 import {DownOutlined, HomeOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined} from "@ant-design/icons"
-import {KeepAlive, Outlet, useLocation, useNavigate} from "umi"
+import {KeepAlive, useOutlet, useLocation, useNavigate} from "umi"
 import "./BasicLayout.less"
 
 
@@ -35,36 +35,42 @@ const menuDataItems: MenuItem[] = [
 const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [activeKey, setActiveKey] = useState<string>("");
-
     const location = useLocation();
     const navigate = useNavigate();
+    const outlet = useOutlet();
 
-    const [tabs, setTabs] = useState<{
-        key: string,
-        label: string,
-        path: string,
-        closable: boolean
-    }[]>([]);
+    const [tabs, setTabs] = useState<{ key: string, label: string, path: string, closable: boolean }[]>([]);
+    const [cachedOutlets, setCachedOutlets] = useState<Record<string, React.ReactNode>>({});
 
-
+    // 监听路由变化，自动创建/激活标签页
     useEffect(() => {
-        const pathName = location.pathname;
-        const findData = menuDataItems.find((menuItem) => {
-            return menuItem.path === pathName;
-        });
-        if (findData) {
-            setTabs([
-                {
-                    key: findData.key as string,
-                    label: findData.label,
-                    path: findData.path,
-                    closable: false
-                }
-            ]);
-            setActiveKey(findData.key as string);
-        }
-    }, []);
+        const currentPath = location.pathname;
+        const existingTab = tabs.find(tab => tab.path === currentPath);
 
+        if (!existingTab) {
+            const menuItem = menuDataItems.find(m => m.path === currentPath);
+            if (menuItem) {
+                const newKey = `${Date.now()}`;
+                setTabs(prev => [...prev, {
+                    key: newKey,
+                    label: menuItem.label,
+                    path: currentPath,
+                    closable: true
+                }]);
+                setActiveKey(newKey);
+
+                // 缓存当前Outlet
+                setCachedOutlets(prev => ({
+                    ...prev,
+                    [currentPath]: outlet
+                }));
+            }
+        } else {
+            setActiveKey(existingTab.key);
+        }
+    }, [location.pathname]);
+
+    // 添加标签页
     const addTab = (label: string, path: string, key: string) => {
         const existingTab = tabs.find(tab => tab.path === path);
         if (existingTab) {
@@ -72,7 +78,8 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
             navigate(path);
             return;
         }
-        setTabs([...tabs, {
+
+        setTabs(prev => [...prev, {
             key: key,
             label,
             path,
@@ -80,6 +87,12 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         }]);
         setActiveKey(key);
         navigate(path);
+
+        // 缓存当前Outlet
+        setCachedOutlets(prev => ({
+            ...prev,
+            [path]: outlet
+        }));
     };
 
     const handleMenuItemClick: MenuProps["onClick"] = (data) => {
@@ -121,20 +134,22 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         }
     };
 
-    const tabsItems = useMemo(() => {
-        return tabs.map(tab => ({
-            key: tab.key,
-            label: tab.label,
-            closable: tab.closable,
-            children: (
-                <KeepAlive name={tab.key} saveScrollPosition="screen">
-                    <div className="page-content">
-                        <Outlet/>
-                    </div>
-                </KeepAlive>
-            )
-        }));
-    }, [tabs]);
+    const tabsItems = tabs.map(tab => ({
+        key: tab.key,
+        label: tab.label,
+        closable: tab.closable,
+        children: (
+            <KeepAlive
+                name={tab.path}  // 使用路径作为唯一标识
+                saveScrollPosition="screen"
+                when={() => true} // 始终缓存
+            >
+                <div className="page-content">
+                    {cachedOutlets[tab.path] || outlet}
+                </div>
+            </KeepAlive>
+        )
+    }));
 
     return (
         <Layout style={{minHeight: "100vh"}}>
