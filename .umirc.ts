@@ -2,15 +2,15 @@ import {defineConfig} from "umi";
 
 //"@umijs/plugins/dist/keepalive"
 export default defineConfig({
-    plugins: ["@umijs/plugins/dist/antd", "@umijs/plugins/dist/dva"],
-    base:"/",
-    history:{
-        type :"hash"
+    plugins: ["@umijs/plugins/dist/antd", "@umijs/plugins/dist/dva", "umi-plugin-keep-alive"],
+    base: "/",
+    history: {
+        type: "hash"
     },
-    autoprefixer:{ flexbox: 'no-2009' },
-    cacheDirectoryPath:"node_modules/.cache",
+    autoprefixer: {flexbox: 'no-2009'},
+    cacheDirectoryPath: "node_modules/.cache",
     mock: false,
-    copy:[],
+    copy: [],
     antd: {
         import: false,
         style: "less",
@@ -20,23 +20,22 @@ export default defineConfig({
     //打包成es5
     jsMinifier: "terser",
     cssMinifier: "cssnano",
-    cssPublicPath:"./",
-    define:{
-
-    },
-    favicons:[],
-    inlineLimit:10000,
+    cssPublicPath: "./",
+    define: {},
+    favicons: [],
+    inlineLimit: 10000,
     routes: [
-        {path: "/", component: "index"},
-        {path: "/docs", component: "docs"},
         {
-            path: "/test",
-            component: "@/layouts/test/index",
-            layout: false,
-            routes: [
+            path: "/",
+            component: "@/layouts/BasicLayout.tsx",
+            routes:[
                 {
-                    path: "/test/list",
-                    component: "@/layouts/test/list",
+                    path:"/",
+                    component:"@/pages/Home/index",
+                },
+                {
+                    path:"/users",
+                    component:"@/pages/Users/index"
                 }
             ]
         }

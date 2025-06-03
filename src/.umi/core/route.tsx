@@ -4,15 +4,13 @@
 import React from 'react';
 
 export async function getRoutes() {
-  const routes = {"1":{"path":"/","parentId":"@@/global-layout","id":"1"},"2":{"path":"/docs","parentId":"@@/global-layout","id":"2"},"3":{"path":"/test","layout":false,"id":"3"},"4":{"path":"/test/list","parentId":"3","id":"4"},"@@/global-layout":{"id":"@@/global-layout","path":"/","isLayout":true}} as const;
+  const routes = {"1":{"path":"/","id":"1"},"2":{"path":"/","parentId":"1","id":"2"},"3":{"path":"/users","parentId":"1","id":"3"}} as const;
   return {
     routes,
     routeComponents: {
-'1': React.lazy(() => import(/* webpackChunkName: "p__index" */'@/pages/index.tsx')),
-'2': React.lazy(() => import(/* webpackChunkName: "p__docs" */'@/pages/docs.tsx')),
-'3': React.lazy(() => import(/* webpackChunkName: "layouts__test__index" */'@/layouts/test/index.tsx')),
-'4': React.lazy(() => import(/* webpackChunkName: "layouts__test__list" */'@/layouts/test/list.tsx')),
-'@@/global-layout': React.lazy(() => import(/* webpackChunkName: "layouts__index" */'/Users/yanjinqiang/WebstormProjects/management/src/layouts/index.tsx')),
+'1': React.lazy(() => import(/* webpackChunkName: "layouts__BasicLayout" */'@/layouts/BasicLayout.tsx')),
+'2': React.lazy(() => import(/* webpackChunkName: "p__Home__index" */'@/pages/Home/index.tsx')),
+'3': React.lazy(() => import(/* webpackChunkName: "p__Users__index" */'@/pages/Users/index.tsx')),
 },
   };
 }
