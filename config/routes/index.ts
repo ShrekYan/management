@@ -2,25 +2,26 @@ export default [
     {
         path: "/",
         component: "@/layouts/BasicLayout.tsx",
-        name:"BasicLayout",
+        name: "BasicLayout",
         routes: [
             {
                 path: "/",
-                name:"首页",
-                icon:"HomeOutlined",
+                name: "首页",
+                icon: "HomeOutlined",
                 component: "@/pages/Home/index",
             },
             {
                 path: "/users",
-                icon:"UserOutlined",
-                name:"用户管理",
+                icon: "UserOutlined",
+                name: "用户管理",
                 component: "@/pages/Users/index"
             }
         ]
     },
     {
-        path:"/login",
+        path: "/login",
         component: "@/pages/Login/index",
-        layout:false
-    }
+        layout: false,
+        name: "登陆页面"
+    },
 ];

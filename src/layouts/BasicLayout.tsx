@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import type {GetProp, MenuProps} from "antd"
-import {Avatar, Breadcrumb, Dropdown, Layout, Menu, Tabs} from "antd"
+import {Avatar, Breadcrumb, Dropdown, Layout, Menu, Tabs,Modal} from "antd"
 import {DownOutlined} from "@ant-design/icons"
 import {KeepAlive, Link, useLocation, useNavigate, useOutlet} from "umi"
 import type {MenuDataItem} from "@umijs/route-utils";
@@ -171,7 +171,15 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
 
         }
         if(key === RIGHT_MENU.LOGO_OUT){
-
+           Modal.confirm({
+                content:"是否确认退出？",
+                cancelText:"取消",
+                centered:true,
+                okText:"确定",
+                onOk:()=>{
+                    navigate("/login");
+                }
+            });
         }
     };
 

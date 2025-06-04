@@ -23,7 +23,7 @@ export const loopMenuItemIcon = (routeList: MenuDataItem[] | undefined = []): Me
  *
  * 生成菜单数据
  * @param routeList
- * @param index
+ * @param initialIndex
  * @return
  * [
  *     {
@@ -52,17 +52,18 @@ export const loopMenuItemIcon = (routeList: MenuDataItem[] | undefined = []): Me
  *     }
  * ]
  */
-export const generateMenuData = (routeList: MenuDataItem[], index = 0) => {
-    if (!routeList) {
-        return null;
-    }
-    return routeList.map((routeItem: MenuDataItem) => {
+export const generateMenuData = (routeList: MenuDataItem[], initialIndex = 0) => {
+    if (!routeList) return null;
+
+    return routeList.map((routeItem: MenuDataItem, i) => {
+        const currentIndex = initialIndex + i + 1; // 创建新变量
+
         routeItem.children = routeItem.routes;
         routeItem.label = routeItem.name;
-        let _index = index+1;
-        routeItem.key = _index.toString();
+        routeItem.key = currentIndex.toString();
+
         if (routeItem.routes) {
-            generateMenuData(routeItem.routes, _index);
+            generateMenuData(routeItem.routes, currentIndex);
         }
         return routeItem;
     });

@@ -1,4 +1,5 @@
 import {defineConfig} from "umi";
+import routes from "./config/routes/index"
 
 //"@umijs/plugins/dist/keepalive"
 export default defineConfig({
@@ -24,21 +25,6 @@ export default defineConfig({
     define: {},
     favicons: [],
     inlineLimit: 10000,
-    routes: [
-        {
-            path: "/",
-            component: "@/layouts/BasicLayout.tsx",
-            routes:[
-                {
-                    path:"/",
-                    component:"@/pages/Home/index",
-                },
-                {
-                    path:"/users",
-                    component:"@/pages/Users/index"
-                }
-            ]
-        }
-    ],
+    routes:routes,
     npmClient: 'pnpm',
 });
