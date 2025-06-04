@@ -1,37 +1,25 @@
 import React, {useEffect, useState} from "react"
-import type {MenuProps} from "antd"
-import {Avatar, Button, Dropdown, Layout, Menu, Tabs} from "antd"
-import {DownOutlined, HomeOutlined, MenuFoldOutlined, MenuUnfoldOutlined, UserOutlined} from "@ant-design/icons"
-import {KeepAlive, useOutlet, useLocation, useNavigate} from "umi"
+import type {GetProp, MenuProps} from "antd"
+import {Avatar, Breadcrumb, Dropdown, Layout, Menu, Tabs} from "antd"
+import {DownOutlined} from "@ant-design/icons"
+import {KeepAlive, Link, useLocation, useNavigate, useOutlet} from "umi"
+import type {MenuDataItem} from "@umijs/route-utils";
+import routes from "./../../config/routes/index"
+import {findMenuData, generateMenuData, getBreadcrumbName, loopMenuItemIcon} from "./handler"
+import {RIGHT_MENU, RightMenuItems} from "./constant"
 import "./BasicLayout.less"
-
 
 const {Header, Sider, Content, Footer} = Layout;
 
-const items = [
-    {key: '1', label: '账户设置'},
-    {key: '2', label: '退出'}
-];
-
-type MenuItem = Required<MenuProps>["items"][number] & { path: string, label: string };
-
-const menuDataItems: MenuItem[] = [
-    {
-        key: "1",
-        label: "首页",
-        icon: <HomeOutlined/>,
-        path: "/"
-    },
-    {
-        key: "2",
-        label: "用户管理",
-        icon: <UserOutlined/>,
-        path: "/users"
-    }
-]
-
+//定义的路由数据
+const _routes = loopMenuItemIcon(routes[0].routes);
+//菜单数据
+const menuDataItems: MenuDataItem[] = generateMenuData(_routes) || [];
 
 //https://yuanbao.tencent.com/chat/naQivTmsDa/3b1942a1-ea7b-4e16-9675-725d131485eb
+/**
+ * @constructor
+ */
 const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [activeKey, setActiveKey] = useState<string>("");
@@ -42,6 +30,29 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
     const [tabs, setTabs] = useState<{ key: string, label: string, path: string, closable: boolean }[]>([]);
     const [cachedOutlets, setCachedOutlets] = useState<Record<string, React.ReactNode>>({});
 
+    /**
+     * 生成面包屑导航项
+     */
+    const getBreadcrumbItems = () => {
+        const pathSnippets = location.pathname.split("/").filter((i) => i);
+        const _breadcrumbItems = [
+            {
+                title: <Link to="/">首页</Link>
+            }
+        ];
+        let currentPath = "";
+        pathSnippets.forEach((snippet, index) => {
+            currentPath += `/${snippet}`;
+            const isLast = index === pathSnippets.length - 1;
+            const routeName = getBreadcrumbName(menuDataItems, currentPath) || snippet;
+            _breadcrumbItems.push({
+                title: isLast ? <span>{routeName}</span> : <Link to={currentPath}>{routeName}</Link>
+            });
+        });
+
+        return _breadcrumbItems;
+    };
+
     // 监听路由变化，自动创建/激活标签页
     useEffect(() => {
         const currentPath = location.pathname;
@@ -50,14 +61,13 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         if (!existingTab) {
             const menuItem = menuDataItems.find(m => m.path === currentPath);
             if (menuItem) {
-                const newKey = `${Date.now()}`;
                 setTabs(prev => [...prev, {
-                    key: newKey,
+                    key: menuItem.key as string,
                     label: menuItem.label,
                     path: currentPath,
-                    closable: true
+                    closable: false
                 }]);
-                setActiveKey(newKey);
+                setActiveKey(menuItem.key as string);
 
                 // 缓存当前Outlet
                 setCachedOutlets(prev => ({
@@ -70,7 +80,12 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         }
     }, [location.pathname]);
 
-    // 添加标签页
+    /**
+     * 添加标签页
+     * @param label
+     * @param path
+     * @param key
+     */
     const addTab = (label: string, path: string, key: string) => {
         const existingTab = tabs.find(tab => tab.path === path);
         if (existingTab) {
@@ -95,16 +110,24 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         }));
     };
 
+    /**
+     * 菜单点击事件
+     * @param data
+     */
     const handleMenuItemClick: MenuProps["onClick"] = (data) => {
         //console.log(data);
-        const findData = menuDataItems.find((menuItem) => {
-            return menuItem.key === data.key;
-        });
-        if (findData) {
+
+        const findData = findMenuData(menuDataItems, data.key);
+
+        if (findData && findData.path) {
             addTab(findData.label, findData.path, findData.key as string);
         }
     };
 
+    /**
+     * 标签切换事件
+     * @param key
+     */
     const handleTabChange = (key: string) => {
         const findData = tabs.find((item) => {
             return item.key === key;
@@ -115,7 +138,12 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         }
     };
 
+    /**
+     * 标签删除事件
+     * @param targetKey
+     */
     const handleTabRemove = (targetKey: string) => {
+
         const findIndex = tabs.findIndex((tabItem) => {
             return tabItem.key === targetKey
         });
@@ -133,6 +161,20 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
             navigate(prevData.path);
         }
     };
+
+    /**
+     * 右侧下拉框点击事件
+     * @param key
+     */
+    const handleDropdownClick: MenuProps["onClick"] = ({key}) => {
+        if(key === RIGHT_MENU.ACCOUNT) {
+
+        }
+        if(key === RIGHT_MENU.LOGO_OUT){
+
+        }
+    };
+
 
     const tabsItems = tabs.map(tab => ({
         key: tab.key,
@@ -173,7 +215,8 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                 }}>
                     {collapsed ? "LOGO" : "企业管理系统"}
                 </div>
-                <Menu onClick={handleMenuItemClick} items={menuDataItems} theme="light" mode="inline"
+                <Menu onClick={handleMenuItemClick} items={menuDataItems as GetProp<MenuProps, 'items'>} theme="light"
+                      mode="inline"
                       defaultSelectedKeys={[activeKey]} selectedKeys={[activeKey]}/>
             </Sider>
             <Layout className="site-layout">
@@ -185,14 +228,15 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    <Button
-                        type="text"
-                        icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{fontSize: '16px', width: 64, height: 64}}
-                    />
+                    {/*<Button*/}
+                    {/*    type="text"*/}
+                    {/*    icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}*/}
+                    {/*    onClick={() => setCollapsed(!collapsed)}*/}
+                    {/*    style={{fontSize: '16px', width: 64, height: 64}}*/}
+                    {/*/>*/}
+                    <Breadcrumb items={getBreadcrumbItems()} style={{flex: 1}}/>
                     <div style={{display: "flex", alignItems: "center"}}>
-                        <Dropdown menu={{items}} trigger={['click']}>
+                        <Dropdown menu={{items:RightMenuItems, onClick: handleDropdownClick}} trigger={['click']}>
                             <div style={{cursor: 'pointer', display: 'flex', alignItems: 'center'}}>
                                 <Avatar
                                     style={{backgroundColor: '#1890ff', marginRight: 8}}
