@@ -1,11 +1,20 @@
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
+import {useActivate,useUnactivate} from "umi"
 import http from "@/core-tools/http/index"
-import {Input} from "antd"
 
 const Home = () => {
+    const [productList, setProductList] = useState<any[]>([]);
 
+    console.log("进入Home页面");
+    useActivate(()=>{
+        console.log("进入Home页面");
+    });
+    useUnactivate(()=>{
+        console.log("离开Home页面");
+    });
     useEffect(() => {
-        http.post("/product/selectFund/querySelectResult", {
+        console.log("123");
+        http.post<any, any>("/product/selectFund/querySelectResult", {
             "needRedemptionRate": false,
             "pageNo": 1,
             "pageSize": 10,
@@ -22,12 +31,21 @@ const Home = () => {
             "appVersion": "",
             "fraudTokenId": "eyJ2IjoiL01SWGxaaG5ibWdwcGVqR1IyWThGajJNV29oT01wand1Qkt4YytJSEs3TmQ0RkFkSnFJRGJLYURPY1hPQTRQaSIsIm9zIjoid2ViIiwiaXQiOjEyMTAsInQiOiJpOFhPMFlVYmZQeHVlVW1BTEVIcEhSd0FtL0VpTlZ4SWViT2VxYlNrRHZlZm9xRXVTWnRhdU1QWURPbzRjdTZKM2xKWWJqdmxLQWFPdU1ObStONzAwUT09In0="
         }).then((data) => {
-            console.log(data);
+            setProductList(data.data.productList)
         });
     }, []);
 
     return (
-        <Input/>
+        <React.Fragment>
+            {
+                productList?.map((productItem,index)=>{
+                    return (
+                        <div key={index}>{productItem.productName}</div>
+                    )
+                })
+            }
+        </React.Fragment>
+
     )
 };
 

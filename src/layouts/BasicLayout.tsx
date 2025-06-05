@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react"
 import type {GetProp, MenuProps} from "antd"
-import {Avatar, Breadcrumb, Dropdown, Layout, Menu, Tabs,Modal} from "antd"
+import {Avatar, Breadcrumb, Dropdown, Layout, Menu, Tabs, Modal} from "antd"
 import {DownOutlined} from "@ant-design/icons"
 import {KeepAlive,Link, useLocation, useNavigate, useOutlet} from "umi"
 import type {MenuDataItem} from "@umijs/route-utils";
@@ -11,15 +11,11 @@ import "./BasicLayout.less"
 
 const {Header, Sider, Content, Footer} = Layout;
 
-//定义的路由数据
+// 定义的路由数据
 const _routes = loopMenuItemIcon(routes[0].routes);
-//菜单数据
+// 菜单数据
 const menuDataItems: MenuDataItem[] = generateMenuData(_routes) || [];
 
-//https://yuanbao.tencent.com/chat/naQivTmsDa/3b1942a1-ea7b-4e16-9675-725d131485eb
-/**
- * @constructor
- */
 const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [activeKey, setActiveKey] = useState<string>("");
@@ -58,6 +54,12 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         const currentPath = location.pathname;
         const existingTab = tabs.find(tab => tab.path === currentPath);
 
+        // 关键修复：每次路由变化都更新缓存
+        setCachedOutlets(prev => ({
+            ...prev,
+            [currentPath]: outlet
+        }));
+
         if (!existingTab) {
             const menuItem = menuDataItems.find(m => m.path === currentPath);
             if (menuItem) {
@@ -68,12 +70,6 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                     closable: false
                 }]);
                 setActiveKey(menuItem.key as string);
-
-                // 缓存当前Outlet
-                setCachedOutlets(prev => ({
-                    ...prev,
-                    [currentPath]: outlet
-                }));
             }
         } else {
             setActiveKey(existingTab.key);
@@ -102,12 +98,6 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         }]);
         setActiveKey(key);
         navigate(path);
-
-        // 缓存当前Outlet
-        setCachedOutlets(prev => ({
-            ...prev,
-            [path]: outlet
-        }));
     };
 
     /**
@@ -115,8 +105,6 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
      * @param data
      */
     const handleMenuItemClick: MenuProps["onClick"] = (data) => {
-        //console.log(data);
-
         const findData = findMenuData(menuDataItems, data.key);
 
         if (findData && findData.path) {
@@ -143,7 +131,6 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
      * @param targetKey
      */
     const handleTabRemove = (targetKey: string) => {
-
         const findIndex = tabs.findIndex((tabItem) => {
             return tabItem.key === targetKey
         });
@@ -156,7 +143,6 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         setTabs(filterData);
 
         if (targetKey === activeKey) {
-
             setActiveKey(prevData.key);
             navigate(prevData.path);
         }
@@ -168,10 +154,10 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
      */
     const handleDropdownClick: MenuProps["onClick"] = ({key}) => {
         if(key === RIGHT_MENU.ACCOUNT) {
-
+            // 账户管理逻辑
         }
         if(key === RIGHT_MENU.LOGO_OUT){
-           Modal.confirm({
+            Modal.confirm({
                 content:"是否确认退出？",
                 cancelText:"取消",
                 centered:true,
@@ -185,10 +171,10 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
 
 
     const tabsItems = tabs.map(tab => ({
-        key: tab.key,
-        label: tab.label,
-        closable: tab.closable,
-        children: (
+            key: tab.key,
+            label: tab.label,
+            closable: tab.closable,
+            children: (
             <KeepAlive
                 name={tab.path}  // 使用路径作为唯一标识
                 saveScrollPosition="screen"
@@ -198,7 +184,7 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                     {cachedOutlets[tab.path] || outlet}
                 </div>
             </KeepAlive>
-        )
+            )
     }));
 
     return (
@@ -223,9 +209,14 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                 }}>
                     {collapsed ? "LOGO" : "企业管理系统"}
                 </div>
-                <Menu onClick={handleMenuItemClick} items={menuDataItems as GetProp<MenuProps, 'items'>} theme="light"
-                      mode="inline"
-                      defaultSelectedKeys={[activeKey]} selectedKeys={[activeKey]}/>
+                <Menu
+                    onClick={handleMenuItemClick}
+                    items={menuDataItems as GetProp<MenuProps, 'items'>}
+                    theme="light"
+                    mode="inline"
+                    defaultSelectedKeys={[activeKey]}
+                    selectedKeys={[activeKey]}
+                />
             </Sider>
             <Layout className="site-layout">
                 <Header style={{
@@ -236,12 +227,6 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center'
                 }}>
-                    {/*<Button*/}
-                    {/*    type="text"*/}
-                    {/*    icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}*/}
-                    {/*    onClick={() => setCollapsed(!collapsed)}*/}
-                    {/*    style={{fontSize: '16px', width: 64, height: 64}}*/}
-                    {/*/>*/}
                     <Breadcrumb items={getBreadcrumbItems()} style={{flex: 1}}/>
                     <div style={{display: "flex", alignItems: "center"}}>
                         <Dropdown menu={{items:RightMenuItems, onClick: handleDropdownClick}} trigger={['click']}>
@@ -260,6 +245,7 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                 </Header>
                 <Content style={{margin: "16px 16px 0"}}>
                     <div className="content-container">
+                        {/* 关键修复：添加key属性强制刷新Tabs组件 [1,2](@ref) */}
                         <Tabs
                             activeKey={activeKey}
                             onChange={handleTabChange}
@@ -271,6 +257,7 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                             }}
                             hideAdd={true}
                             items={tabsItems}
+                            key={location.pathname} // 强制刷新Tabs
                         />
                     </div>
                 </Content>
