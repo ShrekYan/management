@@ -5,8 +5,6 @@ import routes from "./config/routes/index"
 export default defineConfig({
     plugins: [ "umi-plugin-keep-alive"],
     base: "/",
-    request: {
-    },
     history: {
         type: "hash"
     },
