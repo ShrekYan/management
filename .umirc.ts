@@ -1,10 +1,12 @@
-import {defineConfig} from "umi";
+import {defineConfig} from "@umijs/max";
 import routes from "./config/routes/index"
 
 //"@umijs/plugins/dist/keepalive"
 export default defineConfig({
-    plugins: ["@umijs/plugins/dist/antd", "@umijs/plugins/dist/dva", "umi-plugin-keep-alive"],
+    plugins: [ "umi-plugin-keep-alive"],
     base: "/",
+    request: {
+    },
     history: {
         type: "hash"
     },

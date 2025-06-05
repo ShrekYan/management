@@ -6,6 +6,8 @@
   集成测试	Dva Test Utils	Model 交互、状态管理
   E2E 测试	Jest + Puppeteer	用户流程、跨页面跳转
 * http网络请求、权限管理
+* 别名
+* 拖动功能
 
 
  
