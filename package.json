@@ -5,7 +5,7 @@
     "dev": "max dev",
     "start:localtest": "cross-env UMI_ENV=localtest umi dev",
     "build": "max build",
-    "postinstall": "umi setup",
+    "postinstall": "max setup",
     "setup": "max setup",
     "start": "npm run dev",
     "lint": "max lint",
@@ -13,11 +13,23 @@
   },
   "dependencies": {
     "ahooks": "^3.8.5",
+    "ali-oss": "^6.15.0",
     "antd": "^5.25.3",
     "axios": "^1.9.0",
+    "dayjs": "^1.11.8",
     "es-toolkit": "^1.38.0",
+    "moment": "^2.29.1",
+    "numeral": "^2.0.6",
+    "path-to-regexp": "^6.2.1",
+    "react-is": "^19.0.0",
     "uuid": "^11.1.0",
-    "react-awesome-all-component": "0.0.10"
+    "zod": "^3.24.2",
+    "fast-equals": "^5.2.2",
+    "classnames": "^2.5.1",
+    "react-window": "^1.8.6",
+    "react-helmet-async": "^1.0.4",
+    "react-dnd": "^14.0.5",
+    "omit.js": "^2.0.2"
   },
   "devDependencies": {
     "@ant-design/icons": "^6.0.0",

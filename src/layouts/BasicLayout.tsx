@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react"
 import type {GetProp, MenuProps} from "antd"
-import {Avatar, Breadcrumb, Dropdown, Layout, Menu, Tabs, Modal} from "antd"
+import {Avatar, Breadcrumb, Dropdown, Layout, Menu, Modal, Tabs} from "antd"
 import {DownOutlined} from "@ant-design/icons"
-import {KeepAlive,Link, useLocation, useNavigate, useOutlet} from "umi"
+import {KeepAlive, Link, useLocation, useNavigate, useOutlet} from "umi"
 import type {MenuDataItem} from "@umijs/route-utils";
 import routes from "./../../config/routes/index"
 import {findMenuData, generateMenuData, getBreadcrumbName, loopMenuItemIcon} from "./handler"
@@ -19,6 +19,8 @@ const menuDataItems: MenuDataItem[] = generateMenuData(_routes) || [];
 const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [activeKey, setActiveKey] = useState<string>("");
+    //登陆状态
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
     const outlet = useOutlet();
@@ -49,8 +51,22 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         return _breadcrumbItems;
     };
 
+    useEffect(() => {
+        //已登陆状态
+        const loggedIn = true;
+        setIsLoggedIn(loggedIn);
+
+        if (!loggedIn && location.pathname !== "/login") {
+            navigate("/login", {replace: true});
+        }
+
+    }, [location.pathname]);
+
     // 监听路由变化，自动创建/激活标签页
     useEffect(() => {
+        //如果未登陆，不处理标签页逻辑
+        if (!isLoggedIn) return;
+
         const currentPath = location.pathname;
         const existingTab = tabs.find(tab => tab.path === currentPath);
 
@@ -74,7 +90,7 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         } else {
             setActiveKey(existingTab.key);
         }
-    }, [location.pathname]);
+    }, [location.pathname, isLoggedIn]);
 
     /**
      * 添加标签页
@@ -153,16 +169,16 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
      * @param key
      */
     const handleDropdownClick: MenuProps["onClick"] = ({key}) => {
-        if(key === RIGHT_MENU.ACCOUNT) {
+        if (key === RIGHT_MENU.ACCOUNT) {
             // 账户管理逻辑
         }
-        if(key === RIGHT_MENU.LOGO_OUT){
+        if (key === RIGHT_MENU.LOGO_OUT) {
             Modal.confirm({
-                content:"是否确认退出？",
-                cancelText:"取消",
-                centered:true,
-                okText:"确定",
-                onOk:()=>{
+                content: "是否确认退出？",
+                cancelText: "取消",
+                centered: true,
+                okText: "确定",
+                onOk: () => {
                     navigate("/login");
                 }
             });
@@ -171,10 +187,10 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
 
 
     const tabsItems = tabs.map(tab => ({
-            key: tab.key,
-            label: tab.label,
-            closable: tab.closable,
-            children: (
+        key: tab.key,
+        label: tab.label,
+        closable: tab.closable,
+        children: (
             <KeepAlive
                 name={tab.path}  // 使用路径作为唯一标识
                 saveScrollPosition="screen"
@@ -184,8 +200,13 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                     {cachedOutlets[tab.path] || outlet}
                 </div>
             </KeepAlive>
-            )
+        )
     }));
+
+    //如果tab没有数据则不渲染主框架
+    if (tabsItems.length === 0) {
+        return null;
+    }
 
     return (
         <Layout style={{minHeight: "100vh"}}>
@@ -229,7 +250,7 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                 }}>
                     <Breadcrumb items={getBreadcrumbItems()} style={{flex: 1}}/>
                     <div style={{display: "flex", alignItems: "center"}}>
-                        <Dropdown menu={{items:RightMenuItems, onClick: handleDropdownClick}} trigger={['click']}>
+                        <Dropdown menu={{items: RightMenuItems, onClick: handleDropdownClick}} trigger={['click']}>
                             <div style={{cursor: 'pointer', display: 'flex', alignItems: 'center'}}>
                                 <Avatar
                                     style={{backgroundColor: '#1890ff', marginRight: 8}}

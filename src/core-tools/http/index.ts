@@ -1,7 +1,7 @@
 import httpEnhancer from "./httpEnhancer";
 import parameter from "./httpPlug/parameter";
 import { httpPromiseAll, httpPromiseStatusWrap } from "./httpHelp";
-import { openLoading, closeLoading } from "./httpPlug/loading";
+//import { openLoading, closeLoading } from "./httpPlug/loading";
 import response from "./httpPlug/response";
 import responseError from "./httpPlug/responseError";
 import session from "./httpPlug/session";
@@ -14,12 +14,12 @@ const serverUrlPrefix = "https://mobile.qiangungun.com/v1";
 const http = new httpEnhancer(serverUrlPrefix, "http://dev-yapi.gungunqian.cn:3000/mock/37");
 
 http.addBeforePlug(parameter)
-    .addBeforePlug(openLoading)
+    //.addBeforePlug(openLoading)
     .addAfterPlug(response)
     .addAfterPlug(responseError)
     .addAfterPlug(session)
     .addErrorPlug(networkError)
-    .addFinallyPlug(closeLoading);
+    //.addFinallyPlug(closeLoading);
 
 export default http;
 

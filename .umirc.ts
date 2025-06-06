@@ -12,6 +12,8 @@ export default defineConfig({
     cacheDirectoryPath: "node_modules/.cache",
     mock: false,
     copy: [],
+    dva:{
+    },
     antd: {
         import: false,
         style: "less",
