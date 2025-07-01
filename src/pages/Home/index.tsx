@@ -14,7 +14,7 @@ const Home = () => {
     });
     useEffect(() => {
         console.log("123");
-        http.post<any, any>("/product/selectFund/querySelectResult", {
+        http.post<any, any>("/v1/product/selectFund/querySelectResult", {
             "needRedemptionRate": false,
             "pageNo": 1,
             "pageSize": 10,
@@ -33,6 +33,8 @@ const Home = () => {
         }).then((data) => {
             setProductList(data.data.productList)
         });
+        // console.log(ENV_TYPE);
+        // console.log("123123");
     }, []);
 
     return (

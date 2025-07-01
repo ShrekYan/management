@@ -24,7 +24,6 @@ export default defineConfig({
     jsMinifier: "terser",
     cssMinifier: "cssnano",
     cssPublicPath: "./",
-    define: {},
     favicons: [],
     inlineLimit: 10000,
     routes:routes,
