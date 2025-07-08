@@ -5,7 +5,7 @@ import {DownOutlined} from "@ant-design/icons"
 import {KeepAlive, Link, useLocation, useNavigate, useOutlet} from "umi"
 import type {MenuDataItem} from "@umijs/route-utils";
 import routes from "./../../config/routes/index"
-import {findMenuData, generateMenuData, getBreadcrumbName, loopMenuItemIcon} from "./handler"
+import {findMenuData, findMenuDataByPath, generateMenuData, getBreadcrumbName, loopMenuItemIcon} from "./handler"
 import {RIGHT_MENU, RightMenuItems} from "./constant"
 import "./BasicLayout.less"
 
@@ -15,6 +15,7 @@ const {Header, Sider, Content, Footer} = Layout;
 const _routes = loopMenuItemIcon(routes[0].routes);
 // 菜单数据
 const menuDataItems: MenuDataItem[] = generateMenuData(_routes) || [];
+
 
 const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
     const [collapsed, setCollapsed] = useState(false);
@@ -77,7 +78,8 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         }));
 
         if (!existingTab) {
-            const menuItem = menuDataItems.find(m => m.path === currentPath);
+            const menuItem = findMenuDataByPath(menuDataItems,currentPath);
+
             if (menuItem) {
                 setTabs(prev => [...prev, {
                     key: menuItem.key as string,
@@ -122,7 +124,6 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
      */
     const handleMenuItemClick: MenuProps["onClick"] = (data) => {
         const findData = findMenuData(menuDataItems, data.key);
-
         if (findData && findData.path) {
             addTab(findData.label, findData.path, findData.key as string);
         }

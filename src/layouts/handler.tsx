@@ -91,15 +91,32 @@ export const getBreadcrumbName = (menus: MenuDataItem[] | undefined = [], path: 
  * @param menus
  * @param key
  */
-export const findMenuData = (menus:MenuDataItem[] | undefined = [],key:string)=>{
+export const findMenuData = (menus:MenuDataItem[] | undefined = [],key:string):MenuDataItem | null =>{
     for (let i = 0; i < menus.length; i++) {
         if (menus[i].key === key) {
             return menus[i];
         }
         if (menus[i].children) {
-            findMenuData(menus[i].children, key);
+           return findMenuData(menus[i].children, key);
         }
     }
     return null;
 };
+/**
+ * 查找菜单对象
+ * @param menus
+ * @param path
+ */
+export const findMenuDataByPath = (menus:MenuDataItem[] | undefined = [],path:string):MenuDataItem | null =>{
+    for (let i = 0; i < menus.length; i++) {
+        if (menus[i].path === path) {
+            return menus[i];
+        }
+        if (menus[i].children) {
+            return findMenuDataByPath(menus[i].children, path);
+        }
+    }
+    return null;
+};
+
 

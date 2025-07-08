@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react"
 import {useActivate,useUnactivate} from "umi"
 import http from "@core-tools/http/index"
-import Login from "@page/Login/index"
 
 const Home = () => {
     const [productList, setProductList] = useState<any[]>([]);
@@ -47,7 +46,6 @@ const Home = () => {
                     )
                 })
             }
-            <Login/>
         </React.Fragment>
 
     )

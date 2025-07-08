@@ -15,6 +15,18 @@ export default [
                 icon: "UserOutlined",
                 name: "用户管理",
                 component: "@/pages/Users/index"
+            },
+            {
+                path:"/common",
+                icon: "UserOutlined",
+                name:"通用",
+                routes:[
+                    {
+                        path:"/common/button",
+                        name:"button",
+                        component: "@/pages/Common/Button/index"
+                    }
+                ]
             }
         ]
     },
