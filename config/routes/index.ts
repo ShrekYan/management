@@ -8,7 +8,7 @@ export default [
                 path: "/",
                 name: "首页",
                 icon: "HomeOutlined",
-                component: "@/pages/Home/index",
+                component: "@/pages/Home/index"
             },
             {
                 path: "/users",
