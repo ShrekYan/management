@@ -1,3 +1,28 @@
 {
-  "extends": "./src/.umi/tsconfig.json"
+  "extends": "./src/.umi/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@@/*": [
+        "src/.umi/*"
+      ],
+      "@umijs/max": [
+        "./node_modules/umi"
+      ],
+      "@umijs/max/typings": [
+        "src/.umi/typings"
+      ],
+      "@page/*": ["./src/pages/*"],
+      "@services/*":["./src/api/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@business/*": ["./src/business/*"],
+      "@components/*": ["./src/components/*"],
+      "@core-tools/*": ["./src/core-tools/*"],
+      "@local-types/*": ["./src/types/*"],
+      "@utils/*": ["./src/utils/*"]
+    }
+  }
 }
