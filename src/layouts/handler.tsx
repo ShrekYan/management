@@ -61,6 +61,7 @@ export const generateMenuData = (routeList: MenuDataItem[], initialIndex = 0) =>
         routeItem.children = routeItem.routes;
         routeItem.label = routeItem.name;
         routeItem.key = currentIndex.toString();
+        routeItem.hidden = !!routeItem.redirect || routeItem.hidden;
 
         if (routeItem.routes) {
             generateMenuData(routeItem.routes, currentIndex);

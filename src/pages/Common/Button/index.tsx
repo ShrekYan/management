@@ -1,11 +1,19 @@
 import React from "react"
+import {Button, Flex} from "antd"
 
-const Button:React.FC = ()=>{
+const ButtonTest: React.FC = () => {
     return (
-        <div>
-            Button
-        </div>
+        <React.Fragment>
+            <Flex gap="small" wrap>
+                <Button type="primary">Primary Button</Button>
+                <Button>Default Button</Button>
+                <Button type="dashed">Dashed Button</Button>
+                <Button type="text">Text Button</Button>
+                <Button type="link">link Button</Button>
+            </Flex>
+
+        </React.Fragment>
     )
 };
 
-export default Button;
+export default ButtonTest;

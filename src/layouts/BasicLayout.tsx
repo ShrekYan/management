@@ -59,6 +59,7 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
 
         if (!loggedIn && location.pathname !== "/login") {
             navigate("/login", {replace: true});
+            return;
         }
 
     }, [location.pathname]);
@@ -70,6 +71,13 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
 
         const currentPath = location.pathname;
         const existingTab = tabs.find(tab => tab.path === currentPath);
+        const menuItem = findMenuDataByPath(menuDataItems, currentPath);
+
+        //跳转到404页面
+        if (!menuItem) {
+            navigate("/404");
+            return;
+        }
 
         // 关键修复：每次路由变化都更新缓存
         setCachedOutlets(prev => ({
@@ -78,8 +86,6 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
         }));
 
         if (!existingTab) {
-            const menuItem = findMenuDataByPath(menuDataItems,currentPath);
-
             if (menuItem) {
                 setTabs(prev => [...prev, {
                     key: menuItem.key as string,

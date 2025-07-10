@@ -21,14 +21,29 @@ export default [
                 icon: "UserOutlined",
                 name:"通用",
                 routes:[
+                    // {
+                    //     path:"/common",
+                    //     redirect: "/common/button"
+                    // },
                     {
                         path:"/common/button",
                         name:"button",
                         component: "@/pages/Common/Button/index"
                     }
                 ]
+            },
+            {
+                path:"*",
+                hidden: true,
+                component: "@/pages/404"
             }
         ]
+    },
+    {
+        path:"/404",
+        layout: false,
+        name:"404",
+        component: "@/pages/404",
     },
     {
         path: "/login",
