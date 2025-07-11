@@ -42,7 +42,17 @@ export default [
                         path: "/layout/divider",
                         name: "Divider",
                         component: "@/pages/Layout/Divider/index"
-                    }
+                    },
+                    {
+                        path:"/layout/flex",
+                        name:"flex",
+                        component: "@/pages/Layout/Flex/index"
+                    },
+                   {
+                        path:"/layout/grid",
+                        name:"grid",
+                        component: "@/pages/Layout/Grid/index"
+                    },
                 ]
             },
             {
