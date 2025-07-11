@@ -1,7 +1,7 @@
 * 代码美化（Prettier）
 * 值得添加的eslint:https://blog.csdn.net/github_35432979/article/details/135965649
-* react-query
-* Leran antd: https://umijs.org/docs/guides/env-variables
+* Leran umi: https://umijs.org/docs/guides/env-variables
+* antd https://ant.design/index-cn
 * 学习资料： https://yuanbao.tencent.com/chat/naQivTmsDa/3b1942a1-ea7b-4e16-9675-725d131485eb
 * 单元测试	Jest + Testing Library	组件逻辑、数据流验证
   集成测试	Dva Test Utils	Model 交互、状态管理
@@ -14,7 +14,10 @@
 * 图表
 * 低代码管理（重要：低代码）
 * 公用组件
+* antd主题颜色、css kebab-case 命名规则
 * 重新学习antd
+* git+lintstaged、git commit（ci/cd）
+* dva
 
 
  

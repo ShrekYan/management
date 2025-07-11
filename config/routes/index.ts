@@ -17,32 +17,45 @@ export default [
                 component: "@/pages/Users/index"
             },
             {
-                path:"/common",
+                path: "/common",
                 icon: "UserOutlined",
-                name:"通用",
-                routes:[
-                    // {
-                    //     path:"/common",
-                    //     redirect: "/common/button"
-                    // },
+                name: "通用",
+                routes: [
                     {
-                        path:"/common/button",
-                        name:"button",
+                        path: "/common/button",
+                        name: "button",
                         component: "@/pages/Common/Button/index"
+                    },
+                    {
+                        path: "/common/typography",
+                        name: "typography",
+                        component: "@/pages/Common/Typography/index"
                     }
                 ]
             },
             {
-                path:"*",
+                path: "/layout",
+                icon: "UserOutlined",
+                name: "布局",
+                routes: [
+                    {
+                        path: "/layout/divider",
+                        name: "Divider",
+                        component: "@/pages/Layout/Divider/index"
+                    }
+                ]
+            },
+            {
+                path: "*",
                 hidden: true,
                 component: "@/pages/404"
             }
         ]
     },
     {
-        path:"/404",
+        path: "/404",
         layout: false,
-        name:"404",
+        name: "404",
         component: "@/pages/404",
     },
     {

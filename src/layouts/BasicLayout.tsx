@@ -5,7 +5,7 @@ import {DownOutlined} from "@ant-design/icons"
 import {KeepAlive, Link, useLocation, useNavigate, useOutlet} from "umi"
 import type {MenuDataItem} from "@umijs/route-utils";
 import routes from "./../../config/routes/index"
-import {findMenuData, findMenuDataByPath, generateMenuData, getBreadcrumbName, loopMenuItemIcon} from "./handler"
+import {findMenuData, findMenuDataByPath, getGenerateMenuData, getBreadcrumbName, loopMenuItemIcon} from "./handler"
 import {RIGHT_MENU, RightMenuItems} from "./constant"
 import "./BasicLayout.less"
 
@@ -13,9 +13,9 @@ const {Header, Sider, Content, Footer} = Layout;
 
 // 定义的路由数据
 const _routes = loopMenuItemIcon(routes[0].routes);
+const generateMenuData = getGenerateMenuData();
 // 菜单数据
 const menuDataItems: MenuDataItem[] = generateMenuData(_routes) || [];
-
 
 const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
     const [collapsed, setCollapsed] = useState(false);

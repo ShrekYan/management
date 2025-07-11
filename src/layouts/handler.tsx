@@ -52,22 +52,25 @@ export const loopMenuItemIcon = (routeList: MenuDataItem[] | undefined = []): Me
  *     }
  * ]
  */
-export const generateMenuData = (routeList: MenuDataItem[], initialIndex = 0) => {
-    if (!routeList) return null;
+export const getGenerateMenuData = () => {
+    let currentIndex = 0;
+    const generateMenuData = (routeList: MenuDataItem[]) => {
+        if (!routeList) return null;
 
-    return routeList.map((routeItem: MenuDataItem, i) => {
-        const currentIndex = initialIndex + i + 1; // 创建新变量
+        return routeList.map((routeItem: MenuDataItem) => {
+            currentIndex += 1; //菜单的key
+            routeItem.children = routeItem.routes;
+            routeItem.label = routeItem.name;
+            routeItem.key = currentIndex.toString();
+            routeItem.hidden = !!routeItem.redirect || routeItem.hidden;
 
-        routeItem.children = routeItem.routes;
-        routeItem.label = routeItem.name;
-        routeItem.key = currentIndex.toString();
-        routeItem.hidden = !!routeItem.redirect || routeItem.hidden;
-
-        if (routeItem.routes) {
-            generateMenuData(routeItem.routes, currentIndex);
-        }
-        return routeItem;
-    });
+            if (routeItem.routes) {
+                generateMenuData(routeItem.routes);
+            }
+            return routeItem;
+        });
+    }
+    return generateMenuData;
 };
 
 /**
@@ -88,36 +91,39 @@ export const getBreadcrumbName = (menus: MenuDataItem[] | undefined = [], path: 
 };
 
 /**
- * 查找菜单对象
+ * 查找菜单对象 by key
  * @param menus
  * @param key
  */
-export const findMenuData = (menus:MenuDataItem[] | undefined = [],key:string):MenuDataItem | null =>{
+export const findMenuData = (menus: MenuDataItem[] | undefined = [], key: string): MenuDataItem | null  => {
+    let _temp: MenuDataItem | null = null;
     for (let i = 0; i < menus.length; i++) {
         if (menus[i].key === key) {
-            return menus[i];
+            _temp = menus[i];
         }
         if (menus[i].children) {
-           return findMenuData(menus[i].children, key);
+            _temp = findMenuData(menus[i].children, key);
         }
     }
-    return null;
+    return _temp;
 };
+
 /**
- * 查找菜单对象
+ * 查找菜单对象 by path
  * @param menus
  * @param path
  */
-export const findMenuDataByPath = (menus:MenuDataItem[] | undefined = [],path:string):MenuDataItem | null =>{
+export const findMenuDataByPath = (menus: MenuDataItem[] | undefined = [], path: string): MenuDataItem | null => {
+    let _temp: MenuDataItem | null = null;
     for (let i = 0; i < menus.length; i++) {
         if (menus[i].path === path) {
-            return menus[i];
+            _temp =  menus[i];
         }
         if (menus[i].children) {
-            return findMenuDataByPath(menus[i].children, path);
+            _temp =  findMenuDataByPath(menus[i].children, path);
         }
     }
-    return null;
+    return _temp;
 };
 
 
