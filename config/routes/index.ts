@@ -53,6 +53,43 @@ export default [
                         name:"grid",
                         component: "@/pages/Layout/Grid/index"
                     },
+                    {
+                        path:"/layout/list",
+                        name:"layoutList",
+                        component:"@/pages/Layout/Layouts/index"
+                    },
+                    {
+                        path:"/layout/space",
+                        name:"space",
+                        component: "@/pages/Layout/Space/index"
+                    },
+                    {
+                        path:"/layout/splitter",
+                        name:"splitter",
+                        component:"@/pages/Layout/Splitter/index"
+                    }
+                ]
+            },
+            {
+                path:"/nav",
+                icon: "UserOutlined",
+                name:"导航",
+                routes:[
+                    {
+                        path:"/nav/anchor",
+                        name:"anchor",
+                        component: "@/pages/Navigation/Anchor/index"
+                    },
+                    {
+                        path:"/nav/breadcrumb",
+                        name:"breadcrumb",
+                        component: "@/pages/Navigation/Breadcrumb/index"
+                    },
+                    {
+                        path:"/nav/dropdown",
+                        name:"dropdown",
+                        component: "@/pages/Navigation/Dropdown/index"
+                    }
                 ]
             },
             {

@@ -90,40 +90,42 @@ export const getBreadcrumbName = (menus: MenuDataItem[] | undefined = [], path: 
     return null;
 };
 
-/**
- * 查找菜单对象 by key
+/** 查找菜单对象 by key
  * @param menus
  * @param key
  */
-export const findMenuData = (menus: MenuDataItem[] | undefined = [], key: string): MenuDataItem | null  => {
-    let _temp: MenuDataItem | null = null;
-    for (let i = 0; i < menus.length; i++) {
-        if (menus[i].key === key) {
-            _temp = menus[i];
+export const findMenuData = (menus: MenuDataItem[] | undefined = [], key: string): MenuDataItem | null => {
+    if (!menus || menus.length === 0) return null;
+
+    for (const menu of menus) {
+        if (menu.key === key) {
+            return menu; // 直接返回匹配节点
         }
-        if (menus[i].children) {
-            _temp = findMenuData(menus[i].children, key);
+        if (menu.children) {
+            const found = findMenuData(menu.children, key);
+            if (found) return found; // 子节点中找到则立即返回
         }
     }
-    return _temp;
+    return null;
 };
 
-/**
- * 查找菜单对象 by path
+/** 查找菜单对象 by path
  * @param menus
  * @param path
  */
 export const findMenuDataByPath = (menus: MenuDataItem[] | undefined = [], path: string): MenuDataItem | null => {
-    let _temp: MenuDataItem | null = null;
-    for (let i = 0; i < menus.length; i++) {
-        if (menus[i].path === path) {
-            _temp =  menus[i];
+    if (!menus || menus.length === 0) return null;
+
+    for (const menu of menus) {
+        if (menu.path === path) {
+            return menu; // 直接返回匹配节点
         }
-        if (menus[i].children) {
-            _temp =  findMenuDataByPath(menus[i].children, path);
+        if (menu.children) {
+            const found = findMenuDataByPath(menu.children, path);
+            if (found) return found; // 子节点中找到则立即返回
         }
     }
-    return _temp;
+    return null;
 };
 
 

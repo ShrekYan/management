@@ -13,11 +13,12 @@
 * ts接口定义结构、zod.js（需要重点学习此库）
 * 图表
 * 低代码管理（重要：低代码）
-* 公用组件
+* 公用组件（可以参考newboss组件）
 * antd主题颜色、css kebab-case 命名规则
 * 重新学习antd
 * git+lintstaged、git commit（ci/cd）
 * dva
+* less变量定义和方法定义
 
 
  
