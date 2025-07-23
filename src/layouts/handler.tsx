@@ -54,7 +54,7 @@ export const loopMenuItemIcon = (routeList: MenuDataItem[] | undefined = []): Me
  */
 export const getGenerateMenuData = () => {
     let currentIndex = 0;
-    const generateMenuData = (routeList: MenuDataItem[]) => {
+    const generateMenuData = (routeList: MenuDataItem[],parentKey:number) => {
         if (!routeList) return null;
 
         return routeList.map((routeItem: MenuDataItem) => {
@@ -62,10 +62,11 @@ export const getGenerateMenuData = () => {
             routeItem.children = routeItem.routes;
             routeItem.label = routeItem.name;
             routeItem.key = currentIndex.toString();
+            routeItem.parentkey = parentKey? parentKey.toString() : null;
             routeItem.hidden = !!routeItem.redirect || routeItem.hidden;
 
             if (routeItem.routes) {
-                generateMenuData(routeItem.routes);
+                generateMenuData(routeItem.routes,currentIndex);
             }
             return routeItem;
         });
