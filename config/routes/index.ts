@@ -89,6 +89,16 @@ export default [
                         path:"/nav/dropdown",
                         name:"dropdown",
                         component: "@/pages/Navigation/Dropdown/index"
+                    },
+                    {
+                        path:"/nav/menu",
+                        name:"menu",
+                        component: "@/pages/Navigation/Menu/index"
+                    },
+                    {
+                        path:"/nav/pagination",
+                        name:"pagination",
+                        component: "@/pages/Navigation/Pagination/index"
                     }
                 ]
             },
