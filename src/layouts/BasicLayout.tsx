@@ -20,7 +20,7 @@ const menuDataItems: MenuDataItem[] = generateMenuData(_routes,0) || [];
 const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [activeKey, setActiveKey] = useState<string>("");
-    const [openKey,setOpenKey] = useState<string>("");
+    const [openKey,setOpenKey] = useState<string[]>([]);
     //登陆状态
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const location = useLocation();
@@ -95,7 +95,7 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                     closable: false
                 }]);
                 setActiveKey(menuItem.key as string);
-                setOpenKey(menuItem.parentkey);
+                setOpenKey(menuItem.paths);
             }
         } else {
             setActiveKey(existingTab.key);
@@ -246,7 +246,7 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                     mode="inline"
                     defaultSelectedKeys={[activeKey]}
                     selectedKeys={[activeKey]}
-                    defaultOpenKeys={[openKey]}
+                    defaultOpenKeys={openKey}
                 />
             </Sider>
             <Layout className="site-layout">

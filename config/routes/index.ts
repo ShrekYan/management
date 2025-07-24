@@ -99,6 +99,16 @@ export default [
                         path:"/nav/pagination",
                         name:"pagination",
                         component: "@/pages/Navigation/Pagination/index"
+                    },
+                    {
+                        path:"/nav/steps",
+                        name:"steps",
+                        component: "@/pages/Navigation/Steps/index"
+                    },
+                    {
+                        path:"/nav/tabs",
+                        name:"tabs",
+                        component: "@/pages/Navigation/Tabs/index"
                     }
                 ]
             },
