@@ -18,7 +18,7 @@ export default defineConfig({
         "@local-types": path.resolve(__dirname, "./src/types"),
         "@utils": path.resolve(__dirname, "./src/utils")
     },
-    autoprefixer: {flexbox: 'no-2009'},
+    autoprefixer: {flexbox: "no-2009"},
     base: "/",
     cacheDirectoryPath: "node_modules/.cache",
     history: {
@@ -27,7 +27,7 @@ export default defineConfig({
     mock: false,
     copy: [],
     dva:{
-    },
+    }, 
     antd: {
         import: false,
         style: "less",
@@ -44,5 +44,9 @@ export default defineConfig({
     inlineLimit: 10000,
 
     routes:routes,
-    npmClient: 'pnpm'
+    npmClient: "pnpm",
+    define:{
+       __IS_DEV__: process.env.NODE_ENV === "development",
+       __IS_PROD__: process.env.NODE_ENV === "production",
+    }
 });

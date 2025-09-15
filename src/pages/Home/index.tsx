@@ -12,8 +12,9 @@ const Home = () => {
     useUnactivate(()=>{
         console.log("离开Home页面");
     });
-    useEffect(() => {
-        console.log("123");
+
+
+       useEffect(() => {
         http.post<any, any>("/v1/product/selectFund/querySelectResult", {
             "needRedemptionRate": false,
             "pageNo": 1,
@@ -33,8 +34,6 @@ const Home = () => {
         }).then((data) => {
             setProductList(data.data.productList)
         });
-        // console.log(ENV_TYPE);
-        // console.log("123123");
     }, []);
 
     return (
