@@ -7,6 +7,9 @@ const CardContainer: React.FC<React.PropsWithChildren<{title:string}>> = ({title
             {children}
         </Card>
     )
+
+
+
 };
 
 export default CardContainer;

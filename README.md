@@ -19,6 +19,6 @@
 * git+lintstaged、git commit（ci/cd）
 * dva
 * less变量定义和方法定义
-
+* prettierrc
 
  
