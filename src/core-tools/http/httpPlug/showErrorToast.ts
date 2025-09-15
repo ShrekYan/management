@@ -1,12 +1,9 @@
 import { debounce } from "es-toolkit";
+import {message} from 'antd'
 
 export default function () {
     const debouncedLog = debounce((errorMsg) => {
-        console.log(errorMsg);
-        // Toast.show({
-        //     content: errorMsg,
-        //     position: "top"
-        // });
+        message.error(errorMsg);
     }, 300);
     return debouncedLog;
 }
