@@ -1,4 +1,4 @@
-* 代码美化（Prettier）
+* ~~代码美化（Prettier）~~
 * 值得添加的eslint:https://blog.csdn.net/github_35432979/article/details/135965649
 * Leran umi: https://umijs.org/docs/guides/env-variables
 * antd https://ant.design/index-cn
@@ -19,6 +19,5 @@
 * git+lintstaged、git commit（ci/cd）
 * dva
 * less变量定义和方法定义
-* ~~prettierrc~~
 
  
