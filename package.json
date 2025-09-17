@@ -21,6 +21,8 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@tiptap/react": "^3.4.3",
+    "@tiptap/starter-kit": "^3.4.3",
     "ahooks": "^3.8.5",
     "ali-oss": "^6.15.0",
     "antd": "^5.25.3",
@@ -38,18 +40,23 @@
     "omit.js": "^2.0.2",
     "p-limit": "^6.2.0",
     "path-to-regexp": "^6.2.1",
+    "prosemirror-model": "^1.25.3",
+    "prosemirror-state": "^1.4.3",
+    "prosemirror-view": "^1.41.0",
     "query-string": "^9.2.2",
     "react-dnd": "^14.0.5",
     "react-helmet-async": "^1.0.4",
     "react-is": "^19.0.0",
+    "react-password-strength-bar": "^0.4.1",
     "react-window": "^1.8.6",
     "uuid": "^11.1.0",
-    "zod": "^3.24.2"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@ant-design/icons": "^6.0.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "@types/numeral": "^2.0.5",
     "@types/react": "^18.0.33",
     "@types/react-dom": "^18.0.11",
     "@umijs/lint": "^4.4.11",

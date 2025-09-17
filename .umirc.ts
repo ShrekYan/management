@@ -1,12 +1,12 @@
-import {defineConfig} from "@umijs/max";
-import routes from "./config/routes/index"
+import { defineConfig } from "@umijs/max";
+import routes from "./config/routes/index";
 import path from "path";
 
 //"@umijs/plugins/dist/keepalive"
 export default defineConfig({
-    plugins: [ "umi-plugin-keep-alive"],
-    outputPath:"dist",
-    alias:{
+    plugins: ["umi-plugin-keep-alive"],
+    outputPath: "dist",
+    alias: {
         "@": path.resolve(__dirname, "./src"),
         "@services": path.resolve(__dirname, "./src/services"),
         "@assets": path.resolve(__dirname, "./src/assets"),
@@ -18,7 +18,7 @@ export default defineConfig({
         "@local-types": path.resolve(__dirname, "./src/types"),
         "@utils": path.resolve(__dirname, "./src/utils")
     },
-    autoprefixer: {flexbox: "no-2009"},
+    autoprefixer: { flexbox: "no-2009" },
     base: "/",
     cacheDirectoryPath: "node_modules/.cache",
     history: {
@@ -26,27 +26,32 @@ export default defineConfig({
     },
     mock: false,
     copy: [],
-    dva:{
-    }, 
+    dva: {},
     antd: {
         import: false,
         style: "less",
         dark: false,
-        compact: true
+        compact: true,
+        configProvider: {
+            theme: {
+                token: {
+                    borderRadius: 6
+                }
+            }
+        }
     },
     //打包成es5
     jsMinifier: "terser",
     cssMinifier: "cssnano",
     cssPublicPath: "./",
-    favicons:[],
-    links:[],
-    metas:[],
+    favicons: [],
+    links: [],
+    metas: [],
     inlineLimit: 10000,
-
-    routes:routes,
+    routes: routes,
     npmClient: "pnpm",
-    define:{
-       __IS_DEV__: process.env.NODE_ENV === "development",
-       __IS_PROD__: process.env.NODE_ENV === "production",
+    define: {
+        __IS_DEV__: process.env.NODE_ENV === "development",
+        __IS_PROD__: process.env.NODE_ENV === "production"
     }
 });

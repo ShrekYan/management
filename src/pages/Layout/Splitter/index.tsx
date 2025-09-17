@@ -12,7 +12,7 @@ const Desc: React.FC<Readonly<{ text?: string | number }>> = (props) => {
 };
 
 const SplitterPage: React.FC = () => {
-
+   
     return (
         <>
             <Splitter style={{ height: 200, boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>

@@ -251,7 +251,7 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                         fontSize: collapsed ? 14 : 18
                     }}
                 >
-                    {collapsed ? "LOGO" : "企业管理系统"}
+                    {collapsed ? "LOGO" : "中欧财富"}
                 </div>
                 <Menu
                     onClick={handleMenuItemClick}
