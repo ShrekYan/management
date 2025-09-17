@@ -32,6 +32,7 @@ export default defineConfig({
         style: "less",
         dark: false,
         compact: true,
+        // https://ant.design/docs/react/customize-theme-cn
         configProvider: {
             theme: {
                 token: {
@@ -44,6 +45,14 @@ export default defineConfig({
     jsMinifier: "terser",
     cssMinifier: "cssnano",
     cssPublicPath: "./",
+    cssLoader: {
+        modules: {
+            auto: true,
+            mode: "local",
+            exportGlobals: true,
+            exportLocalsConvention:"camelCase"
+        }
+    },
     favicons: [],
     links: [],
     metas: [],

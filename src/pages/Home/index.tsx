@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import http from "@core-tools/http/index";
 import TableResult from "./copmonents/TableResult.tsx";
 import QueryModule from "./copmonents/QueryModule/index";
+import styles from "./index.module.less";
 
 const Home = () => {
     const [productList, setProductList] = useState<any[]>([]);
@@ -39,7 +40,7 @@ const Home = () => {
     }, []);
 
     return (
-        <div>
+        <div className={styles.homeContainer}>
             <QueryModule />
             <TableResult productList={productList} />
         </div>
