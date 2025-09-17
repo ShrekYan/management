@@ -8,7 +8,7 @@
   E2E 测试	Jest + Puppeteer	用户流程、跨页面跳转
 ~~* http网络请求~~
 ~~* 别名~~
-* 权限管理（菜单管理、案例管理）、菜单管理（登陆后加载菜单栏目数据BasicLayout.tsx需怎么交互？）、登陆界面、微服务、页面布局、404
+* 权限管理（菜单管理、按钮管理）、菜单管理（登陆后加载菜单栏目数据BasicLayout.tsx需怎么交互？）、登陆界面、微服务、页面布局、404
 ~~* 各个环境、各个请求~~
 * ts接口定义结构
 * zustand
@@ -18,9 +18,9 @@
 * ~~公用组件（可以参考newboss组件）~~
 * ~~antd主题颜色~~
 * ~~css kebab-case 命名规则、cssModule~~
-* git+lintstaged、git commit（ci/cd）
+* ~~git+lintstaged、git commit（ci/cd）~~
 * dva、重新学习antd
-* less变量定义和方法定义
+* less变量定义和方法定义（遇到问题了）
 * 开发一个正式页面，用于跑流程
 * 考虑缓存Tabs和微服务或者模块联帮的交互？
 

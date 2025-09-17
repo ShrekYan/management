@@ -50,7 +50,8 @@
     "react-password-strength-bar": "^0.4.1",
     "react-window": "^1.8.6",
     "uuid": "^11.1.0",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@ant-design/icons": "^6.0.0",
@@ -65,6 +66,7 @@
     "cross-env": "^7.0.3",
     "eslint": "8.57.1",
     "husky": "^9.1.7",
+    "less-loader": "^12.3.0",
     "lint-staged": "^16.1.0",
     "postcss-less": "^6.0.0",
     "prettier": "^3.6.2",

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Select } from "antd";
+import { Form,Input } from "antd";
 import QueryFilterModule from "@components/Common/Appearance/QueryFilterModule";
 
 /**
@@ -9,8 +9,8 @@ import QueryFilterModule from "@components/Common/Appearance/QueryFilterModule";
 const QueryModule: React.FC = () => {
     return (
         <QueryFilterModule>
-            <Form.Item>
-                <Select/>
+            <Form.Item label="基金名称">
+                <Input/>
             </Form.Item>
         </QueryFilterModule>
     );

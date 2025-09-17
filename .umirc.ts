@@ -1,11 +1,22 @@
 import { defineConfig } from "@umijs/max";
 import routes from "./config/routes/index";
 import path from "path";
+import fs from "fs";
 
 //"@umijs/plugins/dist/keepalive"
 export default defineConfig({
     plugins: ["umi-plugin-keep-alive"],
     outputPath: "dist",
+    lessLoader: {
+        modifyVars: {
+           // "@theme-color": "#1890ff"
+        },
+        javascriptEnabled: true,
+        //FIXME:此方案不执行
+        additionalData: (content: string) => {
+            console.log('additionalData');
+        }
+    },
     alias: {
         "@": path.resolve(__dirname, "./src"),
         "@services": path.resolve(__dirname, "./src/services"),
@@ -50,7 +61,7 @@ export default defineConfig({
             auto: true,
             mode: "local",
             exportGlobals: true,
-            exportLocalsConvention:"camelCase"
+            exportLocalsConvention: "camelCase"
         }
     },
     favicons: [],
