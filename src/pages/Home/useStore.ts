@@ -13,7 +13,7 @@ interface StoreInitialState {
 
 // 定义状态类型
 type State = {
-    productList: any[]; // 建议替换为具体类型，如 Product[]
+    productList: QuerySelectResultResponse["productList"];
     loading: boolean;
 };
 
@@ -49,6 +49,7 @@ const useStore = create<StoreState>()(
                 }
             },
             /**
+             * TODO: 使用Promise.allSelected调用接口
              * 获取产品列表
              */
             getProductList: async (params) => {

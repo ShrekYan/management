@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import type { GetProp, MenuProps } from "antd";
-import { Avatar, Breadcrumb, Dropdown, Layout, Menu, Modal, Tabs } from "antd";
+import { Avatar, Breadcrumb, Dropdown, Layout, Menu, Modal, Tabs, ConfigProvider } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { KeepAlive, Link, useLocation, useNavigate, useOutlet } from "umi";
 import type { MenuDataItem } from "@umijs/route-utils";
@@ -13,6 +13,7 @@ import {
     loopMenuItemIcon
 } from "./handler";
 import { RIGHT_MENU, RightMenuItems } from "./constant";
+import zhCN from "antd/locale/zh_CN";
 import "./BasicLayout.less";
 
 const { Header, Sider, Content, Footer } = Layout;
@@ -296,22 +297,25 @@ const BasicLayout: React.FC<{ children: React.ReactElement }> = () => {
                     </div>
                 </Header>
                 <Content style={{ margin: "16px 16px 0" }}>
-                    <div className="content-container">
-                        {/* 关键修复：添加key属性强制刷新Tabs组件 [1,2](@ref) */}
-                        <Tabs
-                            activeKey={activeKey}
-                            onChange={handleTabChange}
-                            type="editable-card"
-                            onEdit={(targetKey, action) => {
-                                if (action === "remove") {
-                                    handleTabRemove(targetKey as string);
-                                }
-                            }}
-                            hideAdd={true}
-                            items={tabsItems}
-                            key={location.pathname} // 强制刷新Tabs
-                        />
-                    </div>
+                    {/* antd 设置成中文 */}
+                    <ConfigProvider locale={zhCN}>
+                        <div className="content-container">
+                            {/* 关键修复：添加key属性强制刷新Tabs组件 [1,2](@ref) */}
+                            <Tabs
+                                activeKey={activeKey}
+                                onChange={handleTabChange}
+                                type="editable-card"
+                                onEdit={(targetKey, action) => {
+                                    if (action === "remove") {
+                                        handleTabRemove(targetKey as string);
+                                    }
+                                }}
+                                hideAdd={true}
+                                items={tabsItems}
+                                key={location.pathname} // 强制刷新Tabs
+                            />
+                        </div>
+                    </ConfigProvider>
                 </Content>
                 <Footer
                     style={{

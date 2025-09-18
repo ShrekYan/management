@@ -1,7 +1,8 @@
 import type { ColumnProps } from "antd/lib/table";
+import type { QuerySelectResultResponse } from "@/types/responses/product/querySelectResult";
 
 export const getTableConfig = (): ColumnProps<any>[] => {
-    const columns: ColumnProps<any>[] = [
+    const columns: ColumnProps<QuerySelectResultResponse["productList"][number]>[] = [
         {
             title: "产品ID",
             dataIndex: "productId",
