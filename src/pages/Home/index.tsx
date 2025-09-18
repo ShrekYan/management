@@ -11,7 +11,7 @@ const Home = () => {
         getProductList({
             needRedemptionRate: false,
             pageNo: 1,
-            pageSize: 10,
+            pageSize: 100,
             productSort: "latest_year_rate",
             productSortsType: "desc",
             parseTypeCode: "16",

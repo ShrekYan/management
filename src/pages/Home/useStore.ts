@@ -62,6 +62,9 @@ const useStore = create<StoreState>()(
                     set({ loading: false });
                 }
             },
+            /**
+             * 重置数据
+             */
             reset: () => {
                 set(store.getInitialState());
             }
