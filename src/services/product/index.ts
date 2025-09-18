@@ -1,7 +1,7 @@
-import queryProductRate from "./queryProductRate";
+import querySelectResult from "./querySelectResult";
 
 const product = {
-    queryProductRate
+    querySelectResult
 };
 
 export default product;

@@ -10,7 +10,7 @@ const QueryModule: React.FC = () => {
     return (
         <QueryFilterModule>
             <Form.Item label="基金名称">
-                <Input/>
+                <Input placeholder="请输入基金名称"/>
             </Form.Item>
         </QueryFilterModule>
     );

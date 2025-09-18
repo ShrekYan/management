@@ -5,3 +5,9 @@ declare module "*.module.less" {
     const classes: { readonly [key: string]: string };
     export default classes;
 }
+// declare interface ResponseData<T = any> {
+//     code: string;
+//     data: T;
+//     msg: string;
+//     realMsg: string;
+// }
