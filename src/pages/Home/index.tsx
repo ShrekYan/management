@@ -6,7 +6,7 @@ import styles from "./index.module.less";
 
 const Home = () => {
     const { productList, getProductList } = useStore();
-    
+
     useEffect(() => {
         getProductList({
             needRedemptionRate: false,
@@ -19,7 +19,6 @@ const Home = () => {
             fundTypeCode: "100"
         });
     }, []);
-
     return (
         <div className={styles.homeContainer}>
             <QueryModule />
