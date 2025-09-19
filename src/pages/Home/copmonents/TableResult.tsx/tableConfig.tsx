@@ -10,7 +10,7 @@ export const getTableConfig = (): ColumnProps<any>[] => {
             fixed: "left"
         },
         {
-            title: "产品名称",
+            title: "基金名称",
             width: 250,
             dataIndex: "productName",
             align: "center"

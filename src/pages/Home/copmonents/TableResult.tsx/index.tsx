@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { Space, Table, Button } from "antd";
 import { getTableConfig } from "./tableConfig";
 import type { ColumnProps } from "antd/es/table";
 import TableCardContainer from "@components/Common/Appearance/TableCardContainer";
 import type { QuerySelectResultResponse } from "@/types/responses/product/querySelectResult";
+import ProductDetailModal from "./copmonents/ProductDetailModal";
+import { CRUD_TYPE, CRUD } from "@utils/constants/constants";
 import useStore from "./../../useStore";
 
 interface TableResultProps {
@@ -14,6 +16,10 @@ const TableResult: React.FC<TableResultProps> = ({ productList }) => {
     const loading = useStore((state) => {
         return state.loading;
     });
+    const [oprType, setOprType] = useState<keyof typeof CRUD>(CRUD.create);
+    //选中的数据
+    const selectedData = useRef<QuerySelectResultResponse["productList"][number]>(null);
+    const [showModal, setShowModal] = useState(false);
     const tableColumns = getTableConfig();
 
     /**
@@ -21,7 +27,10 @@ const TableResult: React.FC<TableResultProps> = ({ productList }) => {
      * @param record
      */
     const handleEdit = (record: QuerySelectResultResponse["productList"][number]) => {
-        console.log(record);
+        //开启弹窗
+        setShowModal(true);
+        selectedData.current = record;
+        setOprType(CRUD.update);
     };
 
     /**
@@ -69,16 +78,54 @@ const TableResult: React.FC<TableResultProps> = ({ productList }) => {
         );
     };
 
+    /**
+     * 开启弹窗
+     */
+    const handleOpenModal = () => {
+        setShowModal(true);
+        selectedData.current = null;
+        setOprType(CRUD.create);
+    };
+
+    /**
+     * 弹窗取消
+     */
+    const handleModalCancel = () => {
+        setShowModal(false);
+        selectedData.current = null;
+    };
+
+    /**
+     * 弹窗完成
+     */
+    const handleModalFinish = () => {
+        setShowModal(false);
+        selectedData.current = null;
+    };
+
     return (
-        <TableCardContainer
-            extra={
-                <Space>
-                    <Button type="primary">新增</Button>
-                </Space>
-            }
-        >
-            {renderTableList()}
-        </TableCardContainer>
+        <React.Fragment>
+            {/* 表格 */}
+            <TableCardContainer
+                extra={
+                    <Space>
+                        <Button type="primary" onClick={handleOpenModal}>
+                            新增
+                        </Button>
+                    </Space>
+                }
+            >
+                {renderTableList()}
+            </TableCardContainer>
+            {/* 弹窗 */}
+            <ProductDetailModal
+                selectedData={selectedData.current}
+                title={`${CRUD_TYPE[oprType as keyof typeof CRUD_TYPE]}详情`}
+                visible={showModal}
+                onCancel={handleModalCancel}
+                onFinish={handleModalFinish}
+            />
+        </React.Fragment>
     );
 };
 

@@ -20,15 +20,17 @@ const QueryModule: React.FC = () => {
      * 查询
      */
     const handleFinish = () => {
-        getProductList({
-            needRedemptionRate: false,
-            pageNo: 1,
-            pageSize: 200,
-            productSort: "latest_year_rate",
-            productSortsType: "desc",
-            parseTypeCode: "16",
-            onlyCount: false,
-            fundTypeCode: "100"
+        formRef?.current?.validateFields().then(() => {
+            getProductList({
+                needRedemptionRate: false,
+                pageNo: 1,
+                pageSize: 200,
+                productSort: "latest_year_rate",
+                productSortsType: "desc",
+                parseTypeCode: "16",
+                onlyCount: false,
+                fundTypeCode: "100"
+            });
         });
     };
 
@@ -46,7 +48,7 @@ const QueryModule: React.FC = () => {
                 formRef={formRef}
                 onReset={handleReset}
             >
-                <Form.Item label="基金名称">
+                <Form.Item name="productName" label="基金名称" rules={[{ required: true, message: "请输入基金名称" }]}>
                     <Input placeholder="请输入基金名称" />
                 </Form.Item>
             </QueryFilterModule>
